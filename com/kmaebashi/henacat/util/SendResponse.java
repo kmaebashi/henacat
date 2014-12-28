@@ -3,18 +3,20 @@ import java.io.*;
 import java.net.*;
 
 public class SendResponse {
-    public static void SendOkResponseHeader(PrintWriter writer,
-					    String contentType)
+    public static void sendOkResponseHeader(OutputStream output,
+					    String contentType,
+					    ResponseHeaderGenerator hg)
 	throws IOException {
-	writer.println("HTTP/1.1 200 OK");
-	writer.println("Date: " + Util.getDateStringUtc());
-	writer.println("Server: Henacat");
-	writer.println("Connection: close");
-	writer.println("Content-type: " + contentType);
-	writer.println("");
+	Util.writeLine(output, "HTTP/1.1 200 OK");
+	Util.writeLine(output, "Date: " + Util.getDateStringUtc());
+	Util.writeLine(output, "Server: Henacat");
+	Util.writeLine(output, "Connection: close");
+	Util.writeLine(output, "Content-type: " + contentType);
+	hg.generate(output);
+	Util.writeLine(output, "");
     }
 
-    public static void SendOkResponse(OutputStream output, InputStream fis,
+    public static void sendOkResponse(OutputStream output, InputStream fis,
 				      String ext) throws Exception {
 	Util.writeLine(output, "HTTP/1.1 200 OK");
 	Util.writeLine(output, "Date: " + Util.getDateStringUtc());
@@ -30,7 +32,7 @@ public class SendResponse {
 	}
     }
 
-    public static void SendMovePermanentlyResponse(OutputStream output,
+    public static void sendMovePermanentlyResponse(OutputStream output,
 						   String location)
 	throws Exception {
 	Util.writeLine(output, "HTTP/1.1 301 Moved Permanently");
@@ -41,7 +43,7 @@ public class SendResponse {
 	Util.writeLine(output, "");
     }
 
-    public static void SendNotFoundResponse(OutputStream output,
+    public static void sendNotFoundResponse(OutputStream output,
 					    String errorDocumentRoot)
 	throws Exception {
 	Util.writeLine(output, "HTTP/1.1 404 Not Found");

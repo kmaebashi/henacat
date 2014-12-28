@@ -9,6 +9,9 @@ public class Main {
 	ServletInfo.addServlet("/testbbs/TestBBS",
 			       "C:\\maebashi\\henacat\\webapps\\testbbs",
 			       "TestBBS");
+	ServletInfo.addServlet("/cookietest/CookieTest",
+			       "C:\\maebashi\\henacat\\webapps\\cookietest",
+			       "CookieTest");
 
         try (ServerSocket server = new ServerSocket(8001)) {
 	    for (;;) {

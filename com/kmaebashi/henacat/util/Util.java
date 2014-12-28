@@ -27,7 +27,7 @@ public class Util {
     // 1行の文字列を、バイト列としてOutputStreamに書き込む
     // ユーティリティメソッド
     public static void writeLine(OutputStream output, String str)
-	throws  Exception {
+	throws  IOException {
 	for (char ch : str.toCharArray()) {
 	    output.write((int)ch);
 	}

@@ -81,25 +81,25 @@ class ServerThread implements Runnable {
 	    try {
 		realPath = pathObj.toRealPath();
 	    } catch (NoSuchFileException ex) {
-		SendResponse.SendNotFoundResponse(output, ERROR_DOCUMENT);
+		SendResponse.sendNotFoundResponse(output, ERROR_DOCUMENT);
 		return;
 	    }
 	    if (!realPath.startsWith(DOCUMENT_ROOT)) {
-		SendResponse.SendNotFoundResponse(output, ERROR_DOCUMENT);
+		SendResponse.sendNotFoundResponse(output, ERROR_DOCUMENT);
 		return;
 	    } else if (Files.isDirectory(realPath)) {
 		String host = requestHeader.get("HOST");
 		String location = "http://"
 		    + ((host != null) ? host : SERVER_NAME)
 		    + path + "/";
-		SendResponse.SendMovePermanentlyResponse(output, location);
+		SendResponse.sendMovePermanentlyResponse(output, location);
 		return;
 	    }
 	    try (InputStream fis
 		 = new BufferedInputStream(Files.newInputStream(realPath))) {
-		SendResponse.SendOkResponse(output, fis, ext);
+		SendResponse.sendOkResponse(output, fis, ext);
 	    } catch (FileNotFoundException ex) {
-		SendResponse.SendNotFoundResponse(output, ERROR_DOCUMENT);
+		SendResponse.sendNotFoundResponse(output, ERROR_DOCUMENT);
 	    }
 	} catch (Exception ex) {
 	    ex.printStackTrace();
